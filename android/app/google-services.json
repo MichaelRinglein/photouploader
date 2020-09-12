@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1036208755408",
+    "firebase_url": "https://photouploader-bff44.firebaseio.com",
+    "project_id": "photouploader-bff44",
+    "storage_bucket": "photouploader-bff44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036208755408:android:566728a6c9cd40587d44d5",
+        "android_client_info": {
+          "package_name": "com.photouploader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036208755408-bv5m363n0el67nmoatt8m2rjsqu4h7s8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYf6MU0oIBPopGNR4UNX1nK8kt4-VA2dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036208755408-bv5m363n0el67nmoatt8m2rjsqu4h7s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036208755408:android:454f281d76d3197b7d44d5",
+        "android_client_info": {
+          "package_name": "com.strawanzer.photouploader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036208755408-bv5m363n0el67nmoatt8m2rjsqu4h7s8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYf6MU0oIBPopGNR4UNX1nK8kt4-VA2dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036208755408-bv5m363n0el67nmoatt8m2rjsqu4h7s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
