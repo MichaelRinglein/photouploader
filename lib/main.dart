@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:photouploader/authenticate/authenticate.dart';
 import 'package:photouploader/models/models.dart';
 import 'package:photouploader/services/auth.dart';
+import 'package:photouploader/services/uploader.dart';
 import 'package:photouploader/wrapper.dart';
 import 'package:provider/provider.dart';
 //import 'package:firebase_core/firebase_core.dart';
@@ -59,6 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void deleteImage() {
+    setState(() {
+      _image = null;
+    });
+  }
+
   final AuthService _auth = AuthService();
 
   @override
@@ -80,17 +87,39 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Hello World'
+            _image == null ?
+            Column(
+              children: [
+                Icon(
+                  Icons.image,
+                  size: 120,
+                  color: Colors.grey,
+                ),
+                Text('No Image selected')
+              ]
+            )
+            :
+            Column(
+              children: [
+                Image.file(_image, width: 300),
+                Uploader(file: _image),
+                RaisedButton(
+                  onPressed: deleteImage,
+                  child: Text('Delete image'),
+                ),
+                RaisedButton(
+                  onPressed: (){},
+                  child: Text('Show all my images'),
+                )
+              ],
             ),
-            _image == null ? Text('No Image selected') : Image.file(_image, width: 300),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
         tooltip: 'Increment',
-        child: Text('Kawaii'),
+        child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

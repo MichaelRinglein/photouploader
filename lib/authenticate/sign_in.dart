@@ -35,7 +35,7 @@ class _SignInState extends State<SignIn> {
                   print('Error while signing in');
                 } else {
                   setState(() => loading = false);
-                  print('Signed in');
+                  print('Signed in with result.uid:');
                   print(result.uid);
                 }
               },
@@ -51,12 +51,12 @@ class _SignInState extends State<SignIn> {
                   print('Error while signing in');
                 } else {
                   setState(() => loading = false);
-                  print('Signed in');
+                  print('Signed in with result.uid:');
                   print(result.uid);
                 }
               },
             ),
-        ],
+          ],
         ),
       )
     );
