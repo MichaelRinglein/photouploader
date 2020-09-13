@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
             :
             Column(
               children: [
-                Image.file(_image, width: 300),
+                Image.file(_image, height: 300),
                 Uploader(file: _image),
                 RaisedButton(
                   onPressed: deleteImage,
