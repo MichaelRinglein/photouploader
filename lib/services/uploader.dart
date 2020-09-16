@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photouploader/models/models.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:photouploader/models/models.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
-
-
-import 'package:photouploader/services/auth.dart';
 
 class Uploader extends StatefulWidget {
 
@@ -21,17 +17,12 @@ class Uploader extends StatefulWidget {
 class _UploaderState extends State<Uploader> {
 
   final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://photouploader-bff44.appspot.com/');
-
-
   StorageUploadTask _uploadTask;
 
-  void _startUpload() {
+  void _startUpload() async {
     final user = Provider.of<UserModel>(context, listen: false);
 
-    String filePath = 'image/${user.uid}/${DateTime.now()}.png';
-    print('the user is:');
-    print(user.uid);
-    print(filePath);
+    String filePath = 'image/${user.uid}/${user.uid}.png';
 
     setState(() {
       _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
@@ -47,12 +38,12 @@ class _UploaderState extends State<Uploader> {
         stream: _uploadTask.events,
         builder: (context, snapshot) {
           var event = snapshot?.data?.snapshot;
-
           double progressPercent = event != null ? event.bytesTransferred / event.totalByteCount : 0;
 
           return Column(
             children: [
-              if(_uploadTask.isComplete) Text('Upload'),
+              if(_uploadTask.isInProgress) Text('Uploading...'),
+              if(_uploadTask.isComplete) Text('Upload completed'),
 
               CircularProgressIndicator(value: progressPercent),
               Text(
@@ -62,10 +53,14 @@ class _UploaderState extends State<Uploader> {
           );
       });
     } else {
-      return RaisedButton.icon(
-        label: Text('Upload Image to Cloud'),
-        icon: Icon(Icons.cloud_upload),
-        onPressed: _startUpload,
+      return Column(
+        children: [
+          RaisedButton.icon(
+            label: Text('Upload Image to Cloud'),
+            icon: Icon(Icons.cloud_upload),
+            onPressed: _startUpload,
+          ),
+        ],
       );
     } return Container();
   }

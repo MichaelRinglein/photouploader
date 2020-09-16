@@ -24,8 +24,9 @@ class _SignInState extends State<SignIn> {
       body: Center(
         child: Column(
           children: [
-            RaisedButton(
-              child: Text('Sign In Anonymously'),
+            RaisedButton.icon(
+              label: Text('Sign In Anonymously'),
+              icon: Icon(Icons.login),
               onPressed: () async {
                 setState(() => loading = true);
                 loading = true;
@@ -40,8 +41,9 @@ class _SignInState extends State<SignIn> {
                 }
               },
             ),
-            RaisedButton(
-              child: Text('Sign In With Google'),
+            RaisedButton.icon(
+              label: Text('Sign In With Google'),
+              icon: Icon(Icons.login),
               onPressed: () async {
                 setState(() => loading = true);
                 loading = true;

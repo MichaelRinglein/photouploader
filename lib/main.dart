@@ -3,14 +3,12 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:photouploader/authenticate/authenticate.dart';
 import 'package:photouploader/models/models.dart';
 import 'package:photouploader/services/auth.dart';
+import 'package:photouploader/services/downloader.dart';
 import 'package:photouploader/services/uploader.dart';
 import 'package:photouploader/wrapper.dart';
 import 'package:provider/provider.dart';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +29,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Wrapper(), /* MyHomePage(title: 'Photouploader'),*/
-
+        home: Wrapper(),
       ),
     );
   }
@@ -90,12 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _image == null ?
             Column(
               children: [
-                Icon(
-                  Icons.image,
-                  size: 120,
-                  color: Colors.grey,
-                ),
-                Text('No Image selected')
+                Downloader(),
               ]
             )
             :
@@ -103,14 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Image.file(_image, height: 300),
                 Uploader(file: _image),
-                RaisedButton(
+                RaisedButton.icon(
+                  label: Text('Delete image'),
+                  icon: Icon(Icons.delete),
                   onPressed: deleteImage,
-                  child: Text('Delete image'),
                 ),
-                RaisedButton(
+                /*RaisedButton(
                   onPressed: (){},
                   child: Text('Show all my images'),
                 )
+                 */
               ],
             ),
           ],
