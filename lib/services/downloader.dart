@@ -12,17 +12,27 @@ class _DownloaderState extends State<Downloader> {
 
   final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://photouploader-bff44.appspot.com/');
   String _url;
+  bool noImage = false;
 
   void _startDownload() async {
-    final user = Provider.of<UserModel>(context, listen: false);
-    String filePath = 'image/${user.uid}/${user.uid}.png';
+    try {
+      final user = Provider.of<UserModel>(context, listen: false);
+      String filePath = 'image/${user.uid}/${user.uid}.png';
 
-    _url = await _storage.ref().child(filePath).getDownloadURL();
+      _url = await _storage.ref().child(filePath).getDownloadURL();
 
-    setState(() {
-      String url = _url;
-    });
+      setState(() {
+        String url = _url;
+      });
+    } catch(e) {
+      print(e.toString());
 
+      setState(() {
+        noImage = true;
+      });
+    }
+
+    print(noImage);
 
   }
 
@@ -47,12 +57,20 @@ class _DownloaderState extends State<Downloader> {
         ],
       )
       :
-      RaisedButton.icon(
-        label: Text('Download Image from Cloud'),
-        icon: Icon(Icons.cloud_download),
-        onPressed: _startDownload,
+      Column(
+        children: [
+          RaisedButton.icon(
+            label: Text('Download Image from Cloud'),
+            icon: Icon(Icons.cloud_download),
+            onPressed: _startDownload,
+          ),
+          noImage == true ?
+          Text('No image in database yet. Please upload an image') :
+          Container(),
+        ],
       )
       );
+
     }
 
   }

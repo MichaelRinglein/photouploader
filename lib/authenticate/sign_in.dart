@@ -23,6 +23,7 @@ class _SignInState extends State<SignIn> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RaisedButton.icon(
               label: Text('Sign In Anonymously'),

@@ -18,8 +18,10 @@ class _UploaderState extends State<Uploader> {
 
   final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://photouploader-bff44.appspot.com/');
   StorageUploadTask _uploadTask;
+  bool _timeOut = false;
 
   void _startUpload() async {
+
     final user = Provider.of<UserModel>(context, listen: false);
 
     String filePath = 'image/${user.uid}/${user.uid}.png';
@@ -32,22 +34,27 @@ class _UploaderState extends State<Uploader> {
 
   @override
   Widget build(BuildContext context) {
-
     if (_uploadTask != null) {
       return StreamBuilder<StorageTaskEvent>(
         stream: _uploadTask.events,
         builder: (context, snapshot) {
           var event = snapshot?.data?.snapshot;
           double progressPercent = event != null ? event.bytesTransferred / event.totalByteCount : 0;
-
           return Column(
             children: [
-              if(_uploadTask.isInProgress) Text('Uploading...'),
-              if(_uploadTask.isComplete) Text('Upload completed'),
-
-              CircularProgressIndicator(value: progressPercent),
-              Text(
-                '${(progressPercent * 100).toStringAsFixed(2)} % '
+              if(_uploadTask.isInProgress) Column(
+                children: [
+                  Text('Uploading...'),
+                  CircularProgressIndicator(value: progressPercent),
+                  Text('${(progressPercent * 100).toStringAsFixed(2)} % '),
+                ],
+              ),
+              if(_uploadTask.isSuccessful) Column(
+                children: [
+                  _timeOut == true ?
+                  Container() :
+                  Text('Image uploaded'),
+                ],
               ),
             ],
           );
