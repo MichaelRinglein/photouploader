@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photouploader/services/auth.dart';
 import 'package:photouploader/services/loading.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 
 class SignIn extends StatefulWidget {
@@ -16,18 +17,32 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      //backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: Text('Sign In'),
-        backgroundColor: Colors.blue,
+        title: Text(
+          'Sign In',
+          style: TextStyle(
+            color: Colors.white,),
+        ),
+        backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RaisedButton.icon(
-              label: Text('Sign In Anonymously'),
-              icon: Icon(Icons.login),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              color: Color.fromRGBO(228, 92, 150, 1.0),
+              label: Text(
+                'Sign In Anonymously',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                )
+              ),
+              icon: Icon(
+                Icons.login,
+                color: Colors.white,
+              ),
               onPressed: () async {
                 setState(() => loading = true);
                 loading = true;
@@ -42,9 +57,34 @@ class _SignInState extends State<SignIn> {
                 }
               },
             ),
+            GoogleSignInButton(
+              onPressed: () async {
+                setState(() => loading = true);
+                loading = true;
+                dynamic result = await _auth.signInAnonym();
+                if (result == null) {
+                  setState(() => loading = false);
+                  print('Error while signing in');
+                } else {
+                  setState(() => loading = false);
+                  print('Signed in with result.uid:');
+                  print(result.uid);
+                }
+              },
+            ),
+            /*
             RaisedButton.icon(
-              label: Text('Sign In With Google'),
-              icon: Icon(Icons.login),
+              color: Color.fromRGBO(228, 92, 150, 1.0),
+              label: Text(
+                'Sign In With Google',
+                style: TextStyle(
+                  color: Colors.white,
+                )
+              ),
+              icon: Icon(
+                Icons.login,
+                color: Colors.white,
+              ),
               onPressed: () async {
                 setState(() => loading = true);
                 loading = true;
@@ -58,7 +98,7 @@ class _SignInState extends State<SignIn> {
                   print(result.uid);
                 }
               },
-            ),
+            ),*/
           ],
         ),
       )

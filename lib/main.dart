@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Photouploader',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.pink,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Wrapper(),
@@ -69,11 +69,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: TextStyle(
+          color: Colors.white),
+        ),
+        backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Logout'),
+            icon: Icon(
+              Icons.person_outline,
+              color: Colors.white,
+            ),
+            label: Text(
+              'Logout',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              )
+            ),
             onPressed: () async {
               await _auth.signOut();
             },
@@ -100,20 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.delete),
                   onPressed: deleteImage,
                 ),
-                /*RaisedButton(
-                  onPressed: (){},
-                  child: Text('Show all my images'),
-                )
-                 */
               ],
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
         onPressed: getImage,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

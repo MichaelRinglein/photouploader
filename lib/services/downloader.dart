@@ -48,7 +48,6 @@ class _DownloaderState extends State<Downloader> {
       _url != null ?
       Column(
         children: [
-          Image.network(_url, height: 300),
           RaisedButton.icon(
             label: Text('Delete image'),
             icon: Icon(Icons.delete),
@@ -59,6 +58,9 @@ class _DownloaderState extends State<Downloader> {
       :
       Column(
         children: [
+          Image(
+            image: AssetImage('assets/laptop.png'),
+          ),
           RaisedButton.icon(
             label: Text('Download Image from Cloud'),
             icon: Icon(Icons.cloud_download),

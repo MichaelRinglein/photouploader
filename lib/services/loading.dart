@@ -7,10 +7,11 @@ class Loading extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
         title: Text('Signing in...'),
+        backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
         ),
       body: Center(
           child: SpinKitRing(
-            color: Colors.blue,
+            color: Color.fromRGBO(228, 92, 150, 1.0),
             size: 60,
           ),
       ),
