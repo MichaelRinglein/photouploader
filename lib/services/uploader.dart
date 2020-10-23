@@ -47,7 +47,11 @@ class _UploaderState extends State<Uploader> {
                   Text('Uploading...'),
                 ],
               ),
-              if(_uploadTask.isComplete) Text('Image uploaded')
+              if(_uploadTask.isComplete) Text(
+                'Image uploaded', style: TextStyle(
+                  color: Colors.green,
+                ),
+              )
             ],
           );
       });
@@ -55,8 +59,19 @@ class _UploaderState extends State<Uploader> {
       return Column(
         children: [
           RaisedButton.icon(
-            label: Text('Upload Image to Cloud'),
-            icon: Icon(Icons.cloud_upload),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: Color.fromRGBO(228, 92, 150, 1.0),
+            label: Text(
+              'Upload Image to Cloud',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            icon: Icon(
+              Icons.cloud_upload_outlined,
+              color: Colors.white,
+            ),
             onPressed: _startUpload,
           ),
         ],

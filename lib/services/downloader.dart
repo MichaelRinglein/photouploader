@@ -49,8 +49,19 @@ class _DownloaderState extends State<Downloader> {
       Column(
         children: [
           RaisedButton.icon(
-            label: Text('Delete image'),
-            icon: Icon(Icons.delete),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: Color.fromRGBO(228, 92, 150, 1.0),
+            label: Text(
+              'Delete image',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+            icon: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
             onPressed: _deleteImage,
           )
         ],
@@ -61,13 +72,25 @@ class _DownloaderState extends State<Downloader> {
           Image(
             image: AssetImage('assets/laptop.png'),
           ),
-          RaisedButton.icon(
-            label: Text('Download Image from Cloud'),
-            icon: Icon(Icons.cloud_download),
+          RaisedButton(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: Color.fromRGBO(228, 92, 150, 1.0),
+            child: Text(
+              'Download Image from Cloud',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
             onPressed: _startDownload,
           ),
           noImage == true ?
-          Text('No image in database yet. Please upload an image') :
+          Text(
+              'No image in database yet. Please upload an image',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+          ) :
           Container(),
         ],
       )

@@ -95,32 +95,46 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _image == null ?
-            Column(
-              children: [
-                Downloader(),
-              ]
-            )
-            :
-            Column(
-              children: [
-                Image.file(_image, height: 300),
-                Uploader(file: _image),
-                RaisedButton.icon(
-                  label: Text('Delete image'),
-                  icon: Icon(Icons.delete),
-                  onPressed: deleteImage,
-                ),
-              ],
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _image == null ?
+              Column(
+                children: [
+                  Downloader(),
+                ]
+              )
+              :
+              Column(
+                children: [
+                  Image.file(_image, height: 300,),
+                  Uploader(file: _image),
+                  RaisedButton.icon(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    color: Color.fromRGBO(228, 92, 150, 1.0),
+                    label: Text(
+                        'Delete image',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        )
+                    ),
+                    icon: Icon(
+                      Icons.delete_outline,
+                      color: Colors.white,
+                    ),
+                    onPressed: deleteImage,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
+        backgroundColor: Color.fromRGBO(247, 17, 115, 1.0),
         onPressed: getImage,
         tooltip: 'Increment',
         child: Icon(

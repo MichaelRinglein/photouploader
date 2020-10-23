@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
-                )
+                ),
               ),
               icon: Icon(
                 Icons.login,
@@ -58,10 +58,11 @@ class _SignInState extends State<SignIn> {
               },
             ),
             GoogleSignInButton(
+              darkMode: true,
               onPressed: () async {
                 setState(() => loading = true);
                 loading = true;
-                dynamic result = await _auth.signInAnonym();
+                dynamic result = await _auth.signInWithGoogle();
                 if (result == null) {
                   setState(() => loading = false);
                   print('Error while signing in');
