@@ -9,8 +9,8 @@ class Downloader extends StatefulWidget {
 }
 
 class _DownloaderState extends State<Downloader> {
-
-  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://photouploader-bff44.appspot.com/');
+  final FirebaseStorage _storage = FirebaseStorage.instanceFor(
+      bucket: 'gs://photouploader-bff44.appspot.com/');
   String _url;
   bool noImage = false;
 
@@ -24,7 +24,7 @@ class _DownloaderState extends State<Downloader> {
       setState(() {
         String url = _url;
       });
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
 
       setState(() {
@@ -33,7 +33,6 @@ class _DownloaderState extends State<Downloader> {
     }
 
     print(noImage);
-
   }
 
   void _deleteImage() {
@@ -42,61 +41,59 @@ class _DownloaderState extends State<Downloader> {
     });
   }
 
-    @override
-    Widget build(BuildContext context) {
-      return (
-      _url != null ?
-      Column(
-        children: [
-          RaisedButton.icon(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: Color.fromRGBO(228, 92, 150, 1.0),
-            label: Text(
-              'Delete image',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-            icon: Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            onPressed: _deleteImage,
+  @override
+  Widget build(BuildContext context) {
+    return (_url != null
+        ? Column(
+            children: [
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  primary: Color.fromRGBO(228, 92, 150, 1.0),
+                ),
+                label: Text(
+                  'Delete image',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                onPressed: _deleteImage,
+              )
+            ],
           )
-        ],
-      )
-      :
-      Column(
-        children: [
-          Image(
-            image: AssetImage('assets/laptop.png'),
-          ),
-          RaisedButton(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: Color.fromRGBO(228, 92, 150, 1.0),
-            child: Text(
-              'Download Image from Cloud',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+        : Column(
+            children: [
+              Image(
+                image: AssetImage('assets/laptop.png'),
               ),
-            ),
-            onPressed: _startDownload,
-          ),
-          noImage == true ?
-          Text(
-              'No image in database yet. Please upload an image',
-              style: TextStyle(
-                color: Colors.red,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  primary: Color.fromRGBO(228, 92, 150, 1.0),
+                ),
+                child: Text(
+                  'Download Image from Cloud',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: _startDownload,
               ),
-          ) :
-          Container(),
-        ],
-      )
-      );
-
-    }
-
+              noImage == true
+                  ? Text(
+                      'No image in database yet. Please upload an image',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : Container(),
+            ],
+          ));
   }
-
+}

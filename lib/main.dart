@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,19 +10,19 @@ import 'package:photouploader/services/downloader.dart';
 import 'package:photouploader/services/uploader.dart';
 import 'package:photouploader/wrapper.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
-Future<void> main()  async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return StreamProvider<UserModel>.value(
+      initialData: UserModel(),
       value: AuthService().user,
       child: MaterialApp(
         title: 'Photouploader',
@@ -45,14 +46,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   File _image;
   final _picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery, maxHeight: 300);
 
-    setState((){
+    setState(() {
       _image = File(pickedFile.path);
     });
   }
@@ -71,23 +72,20 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(
-          color: Colors.white),
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color.fromRGBO(228, 92, 150, 1.0),
         actions: <Widget>[
-          FlatButton.icon(
+          TextButton.icon(
             icon: Icon(
               Icons.person_outline,
               color: Colors.white,
             ),
-            label: Text(
-              'Logout',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              )
-            ),
+            label: Text('Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                )),
             onPressed: () async {
               await _auth.signOut();
             },
@@ -100,35 +98,45 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _image == null ?
-              Column(
-                children: [
-                  Downloader(),
-                ]
-              )
-              :
-              Column(
-                children: [
-                  Image.file(_image, height: 300,),
-                  Uploader(file: _image),
-                  RaisedButton.icon(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    color: Color.fromRGBO(228, 92, 150, 1.0),
-                    label: Text(
-                        'Delete image',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        )
+              _image == null
+                  ? Column(children: [
+                      Downloader(),
+                    ])
+                  : Column(
+                      children: [
+                        kIsWeb == true
+                            ? Image.network(
+                                _image.path,
+                              )
+                            : Image.file(File(
+                                _image.path,
+                              )),
+/*
+                        Image.file(
+                          _image,
+                          height: 300,
+                        ),
+                        */
+                        Uploader(file: _image),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            primary: Color.fromRGBO(228, 92, 150, 1.0),
+                          ),
+                          label: Text('Delete image',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              )),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: Colors.white,
+                          ),
+                          onPressed: deleteImage,
+                        ),
+                      ],
                     ),
-                    icon: Icon(
-                      Icons.delete_outline,
-                      color: Colors.white,
-                    ),
-                    onPressed: deleteImage,
-                  ),
-                ],
-              ),
             ],
           ),
         ),
